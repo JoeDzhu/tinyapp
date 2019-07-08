@@ -13,6 +13,14 @@ app.get("/", (req, res) => {
   res.send("Hail Hydra!");
 });
 
+app.get('/urls.json', (req, res) =>{
+  res.json(urlDatabase);
+})
+
+app.get('/hello', (req, res) =>{
+  res.send("<html><body>Hail <b>Hydra</b></body></html>")
+})
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
