@@ -10,6 +10,19 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        <% if(!username){ %>
+        <form class="form-inline" action="/login" method="POST">
+          <div class="form-group mb-2" align="left">
+            <input class="form-control" type="text" name="username" placeholder="username" style="width: 150px; margin: 1rem">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+        </form>
+        <% } else { %>
+          <form method="POST" action="/logout">
+            <button class="btn btn-secondary">Logout</button>
+          </form>
+        <a class="btn btn-default">Logged in as <%= username %></a>
+        <% } %>
       </div>
     </div>
   </nav>
