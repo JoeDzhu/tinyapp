@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 8080;
-
+//remember to edit the POST /edit, and change the :shortURL to :id
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -51,28 +51,31 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 })
   
-app.get("/urls/:shortURL", (req, res) => {
+app.get("/urls/:id", (req, res) => {
   let templateVars = {
     username: req.cookies["username"],
-    shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL]};
+    shortURL: req.params.id,//后者取值被放入到前者变量中，然后被render页面用<%=%>取得，如果render页面
+    //直接调用id是无法调用的，因为是放入这边的templateVars变量中整体放到render页面中的；
+    longURL: urlDatabase[req.params.id]};
   res.render('urls_show', templateVars);
   
 });
 
-app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL]
+app.get("/u/:id", (req, res) => {
+  const longURL = urlDatabase[req.params.id]
   res.redirect(longURL);
 });
 
 
-app.post("/urls/:shortURL/delete", (req, res) => {
-  delete urlDatabase[req.params.shortURL];
+app.post("/urls/:id/delete", (req, res) => {
+  delete urlDatabase[req.params.id];
   res.redirect("/urls");
 });
 
-app.post("/urls/:shortURL/edit", (req, res) => {
-  urlDatabase[req.params.shortURL] = req.body.longURL;
+app.post("/urls/:id/edit", (req, res) => {
+  urlDatabase[req.params.id] = req.body.longURL;
+  //此处只要保持变量名一致就行，也就是urls的id和paramas.id都是id，那么render页面的post，不管是什么值
+  //传回的时候，都会按照设置好的post来处理；
   res.redirect("/urls");
 });
 
