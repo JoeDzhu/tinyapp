@@ -1,7 +1,7 @@
 # TinyApp Project
 
-TinyApp is the first project I built with js. Thanks to all the good people work at the LighthouseLabs and my colleagues.
-Without the help from all of you, I wouldn't be able to finish this simple app.
+TinyApp is the first project I build with js. Thanks to all the good people work at the LighthouseLabs and my colleagues.
+Without the help from all of them, I wouldn't be able to finish this simple app.
 
 It is a simple but full stack web application built with Node and Express that allows users to shorten long URLs (à la bit.ly).
  
