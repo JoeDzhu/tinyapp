@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
+
 
 const app = express();
 const PORT = 8080;
@@ -105,10 +107,11 @@ app.post("/register", (req, res) => {
 
   } else {
     const uID = generateRandomString();
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10)
     usersdb[uID] = {//用方框，不然会直接去找名叫uID的可以，而不是一个变量；
       id: uID,
       email: req.body.email,
-      password: req.body.password
+      password: hashedPassword
     };//记住如何给obj赋值；特别是嵌套的obj；
     res.cookie("user_id", usersdb[uID].id);
     res.redirect("/urls");
@@ -188,7 +191,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const user = userValidation("email", req);
   if(user) {
-    if(user.password === req.body.password){
+    if(bcrypt.compareSync(req.body.password, user.password)){
       const user_id = user.id
       res.cookie("user_id", user_id)
       res.redirect("/urls");
