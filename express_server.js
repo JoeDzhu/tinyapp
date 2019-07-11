@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const bcrypt = require("bcrypt");
-const getUserByEmail = require("./helpers");
+const { getUserByEmail } = require("./helpers");
 
 
 const app = express();
